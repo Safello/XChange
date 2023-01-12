@@ -6,7 +6,7 @@
     <parent>
         <artifactId>xchange-parent</artifactId>
         <groupId>org.knowm.xchange</groupId>
-        <version>5.0.13-safello</version>
+        <version>5.0.14-safello</version>
     </parent>
 
     <artifactId>xchange-fcoin</artifactId>
