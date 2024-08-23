@@ -253,7 +253,7 @@ public final class BitstampAdapters {
   public static Map.Entry<String, BigDecimal> findNonzeroAmount(BitstampUserTransaction transaction)
       throws ExchangeException {
     for (Map.Entry<String, BigDecimal> entry : transaction.getAmounts().entrySet()) {
-      if (entry.getValue().abs().compareTo(new BigDecimal(1e-6)) == 1) {
+      if (entry.getValue().abs().compareTo(new BigDecimal(1e-8)) > 0) {
         return entry;
       }
     }
