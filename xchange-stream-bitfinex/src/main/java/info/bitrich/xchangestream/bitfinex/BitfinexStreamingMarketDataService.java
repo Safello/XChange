@@ -15,7 +15,7 @@ import info.bitrich.xchangestream.bitfinex.dto.BitfinexWebSocketUpdateOrderbook;
 import info.bitrich.xchangestream.bitfinex.dto.BitfinexWebsocketUpdateTrade;
 import info.bitrich.xchangestream.core.StreamingMarketDataService;
 import info.bitrich.xchangestream.service.netty.StreamingObjectMapperHelper;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import java.util.HashMap;
 import java.util.Map;
 import org.knowm.xchange.currency.Currency;
@@ -37,9 +37,11 @@ public class BitfinexStreamingMarketDataService implements StreamingMarketDataSe
   }
 
   private String pairToSymbol(CurrencyPair currencyPair) {
-    return (currencyPair.counter == Currency.USDT)
-        ? ("t" + currencyPair.base.getCurrencyCode() + "UST")
-        : ("t" + currencyPair.base.getCurrencyCode() + currencyPair.counter.getCurrencyCode());
+    return (currencyPair.getCounter() == Currency.USDT)
+        ? ("t" + currencyPair.getBase().getCurrencyCode() + "UST")
+        : ("t"
+            + currencyPair.getBase().getCurrencyCode()
+            + currencyPair.getCounter().getCurrencyCode());
   }
 
   @Override

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import info.bitrich.xchangestream.bitstamp.dto.BitstampWebSocketTransaction;
 import info.bitrich.xchangestream.core.StreamingMarketDataService;
 import info.bitrich.xchangestream.service.netty.StreamingObjectMapperHelper;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import org.knowm.xchange.bitstamp.BitstampAdapters;
 import org.knowm.xchange.bitstamp.dto.marketdata.BitstampOrderBook;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -85,7 +85,7 @@ public class BitstampStreamingMarketDataService implements StreamingMarketDataSe
 
   private String getChannelPostfix(CurrencyPair currencyPair) {
     return "_"
-        + currencyPair.base.toString().toLowerCase()
-        + currencyPair.counter.toString().toLowerCase();
+        + currencyPair.getBase().toString().toLowerCase()
+        + currencyPair.getCounter().toString().toLowerCase();
   }
 }

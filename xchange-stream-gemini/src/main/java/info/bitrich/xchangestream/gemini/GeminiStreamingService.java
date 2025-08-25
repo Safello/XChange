@@ -2,9 +2,9 @@ package info.bitrich.xchangestream.gemini;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import info.bitrich.xchangestream.service.netty.ConnectionStateModel.State;
-import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
+import io.reactivex.rxjava3.subjects.Subject;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.knowm.xchange.currency.CurrencyPair;
@@ -31,7 +31,8 @@ public class GeminiStreamingService {
 
   public Observable<JsonNode> subscribeChannel(CurrencyPair currencyPair, Object... args) {
     if (!productStreamingServices.containsKey(currencyPair)) {
-      String symbolUri = baseUri + currencyPair.base.toString() + currencyPair.counter.toString();
+      String symbolUri =
+          baseUri + currencyPair.getBase().toString() + currencyPair.getCounter().toString();
       GeminiProductStreamingService productStreamingService =
           new GeminiProductStreamingService(symbolUri, currencyPair);
       productStreamingService.connect().blockingAwait();

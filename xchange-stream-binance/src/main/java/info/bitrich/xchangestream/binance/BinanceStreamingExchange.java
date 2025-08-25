@@ -8,8 +8,8 @@ import info.bitrich.xchangestream.core.StreamingExchange;
 import info.bitrich.xchangestream.service.netty.ConnectionStateModel.State;
 import info.bitrich.xchangestream.service.netty.WebSocketClientHandler;
 import info.bitrich.xchangestream.util.Events;
-import io.reactivex.Completable;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -331,5 +331,15 @@ public class BinanceStreamingExchange extends BinanceExchange implements Streami
   public void setChannelInactiveHandler(
       WebSocketClientHandler.WebSocketMessageHandler channelInactiveHandler) {
     streamingService.setChannelInactiveHandler(channelInactiveHandler);
+  }
+
+  @Override
+  public void resubscribeChannels() {
+    streamingService.resubscribeChannels();
+  }
+
+  @Override
+  public Observable<Object> connectionIdle() {
+    return streamingService.subscribeIdle();
   }
 }

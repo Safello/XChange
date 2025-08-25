@@ -6,7 +6,7 @@ import info.bitrich.xchangestream.kraken.dto.KrakenOpenOrder;
 import info.bitrich.xchangestream.kraken.dto.KrakenOwnTrade;
 import info.bitrich.xchangestream.kraken.dto.enums.KrakenSubscriptionName;
 import info.bitrich.xchangestream.service.netty.StreamingObjectMapperHelper;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -137,7 +137,7 @@ public class KrakenStreamingTradeService implements StreamingTradeService {
                 .timestamp(dto.opentm == null ? null : new Date((long) (dto.opentm * 1000L)))
                 .fee(dto.fee)
                 .flags(adaptFlags(dto.oflags))
-                .userReference(dto.userref == null ? null : Integer.toString(dto.userref))
+                .userReference(resolveUserReference(dto.cl_ord_id, dto.userref))
                 .build());
       }
     }
@@ -218,11 +218,16 @@ public class KrakenStreamingTradeService implements StreamingTradeService {
                 .type(KrakenAdapters.adaptOrderType(KrakenType.fromString(dto.type)))
                 .price(dto.price)
                 .feeAmount(dto.fee)
-                .feeCurrency(currencyPair.counter)
+                .feeCurrency(currencyPair.getCounter())
                 .originalAmount(dto.vol)
+                .orderUserReference(resolveUserReference(dto.cl_ord_id, dto.userref))
                 .build());
       }
     }
     return result;
+  }
+
+  private static String resolveUserReference(String cl_ord_id, Integer userref) {
+    return cl_ord_id == null ? userref == null ? null : Integer.toString(userref) : cl_ord_id;
   }
 }

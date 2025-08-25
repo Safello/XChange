@@ -25,10 +25,8 @@ import org.knowm.xchange.dto.account.OpenPositions;
 import org.knowm.xchange.dto.trade.LimitOrder;
 import org.knowm.xchange.dto.trade.MarketOrder;
 import org.knowm.xchange.dto.trade.OpenOrders;
-import org.knowm.xchange.dto.trade.StopOrder;
 import org.knowm.xchange.dto.trade.UserTrades;
 import org.knowm.xchange.exceptions.ExchangeException;
-import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.instrument.Instrument;
 import org.knowm.xchange.service.trade.TradeService;
 import org.knowm.xchange.service.trade.params.CancelOrderByIdParams;
@@ -65,7 +63,7 @@ public class DeribitTradeService extends DeribitTradeServiceRaw implements Trade
     if (params instanceof OpenOrdersParamCurrencyPair) {
       OpenOrdersParamCurrencyPair pairParams = (OpenOrdersParamCurrencyPair) params;
       CurrencyPair pair = pairParams.getCurrencyPair();
-      openOrders = super.getOpenOrdersByCurrency(pair.base.getCurrencyCode(), null, null);
+      openOrders = super.getOpenOrdersByCurrency(pair.getBase().getCurrencyCode(), null, null);
     } else if (params instanceof OpenOrdersParamInstrument) {
       OpenOrdersParamInstrument instrumentParams = (OpenOrdersParamInstrument) params;
       Instrument instrument = instrumentParams.getInstrument();
@@ -105,24 +103,6 @@ public class DeribitTradeService extends DeribitTradeServiceRaw implements Trade
   @Override
   public String placeLimitOrder(LimitOrder limitOrder) throws IOException {
     return placeOrder(OrderType.limit, limitOrder, limitOrder.getLimitPrice(), null, null);
-  }
-
-  @Override
-  public String placeStopOrder(StopOrder stopOrder) throws IOException {
-    /*
-    // TBD:
-    // get "trigger", "price" and "trigger price" as follows:
-    Trigger trigger = findOrderFlagValue(order, Trigger.class);
-    BigDecimal price = stopOrder.getLimitPrice();
-    BigDecimal triggerPrice = stopOrder.getStopPrice()
-
-    // then adapt order type of the stop order (add corresponding adapter)
-    OrderType type = DeribitAdapters.adaptOrderType(stopOrder);
-
-    // validate the values and then call placeOrder:
-    placeOrder(type, order, price, trigger, triggerPrice);
-    */
-    throw new NotYetImplementedForExchangeException("placeStopOrder");
   }
 
   private String placeOrder(
@@ -256,7 +236,7 @@ public class DeribitTradeService extends DeribitTradeServiceRaw implements Trade
     if (params instanceof TradeHistoryParamCurrencyPair) {
       CurrencyPair currencyPair = ((TradeHistoryParamCurrencyPair) params).getCurrencyPair();
       if (currencyPair != null) {
-        currency = currencyPair.base.getCurrencyCode();
+        currency = currencyPair.getBase().getCurrencyCode();
       }
     }
 

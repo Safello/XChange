@@ -9,7 +9,7 @@ import info.bitrich.xchangestream.hitbtc.dto.HitbtcWebSocketTickerTransaction;
 import info.bitrich.xchangestream.hitbtc.dto.HitbtcWebSocketTradeParams;
 import info.bitrich.xchangestream.hitbtc.dto.HitbtcWebSocketTradesTransaction;
 import info.bitrich.xchangestream.service.netty.StreamingObjectMapperHelper;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class HitbtcStreamingMarketDataService implements StreamingMarketDataServ
 
   @Override
   public Observable<OrderBook> getOrderBook(CurrencyPair currencyPair, Object... args) {
-    String pair = currencyPair.base.toString() + currencyPair.counter.toString();
+    String pair = currencyPair.getBase().toString() + currencyPair.getCounter().toString();
     String channelName = getChannelName("orderbook", pair);
     final ObjectMapper mapper = StreamingObjectMapperHelper.getObjectMapper();
 
@@ -52,7 +52,7 @@ public class HitbtcStreamingMarketDataService implements StreamingMarketDataServ
 
   @Override
   public Observable<Trade> getTrades(CurrencyPair currencyPair, Object... args) {
-    String pair = currencyPair.base.toString() + currencyPair.counter.toString();
+    String pair = currencyPair.getBase().toString() + currencyPair.getCounter().toString();
     String channelName = getChannelName("trades", pair);
     final ObjectMapper mapper = StreamingObjectMapperHelper.getObjectMapper();
 
@@ -73,7 +73,7 @@ public class HitbtcStreamingMarketDataService implements StreamingMarketDataServ
 
   @Override
   public Observable<Ticker> getTicker(CurrencyPair currencyPair, Object... args) {
-    String pair = currencyPair.base.toString() + currencyPair.counter.toString();
+    String pair = currencyPair.getBase().toString() + currencyPair.getCounter().toString();
     String channelName = getChannelName("ticker", pair);
     final ObjectMapper mapper = StreamingObjectMapperHelper.getObjectMapper();
 
