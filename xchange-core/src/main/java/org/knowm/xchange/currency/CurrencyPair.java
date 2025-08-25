@@ -364,7 +364,7 @@ public class CurrencyPair extends Instrument implements Comparable<CurrencyPair>
   public static final CurrencyPair ETC_7D =
       new CurrencyPair(Currency.ETC, Currency.getInstance("7D"));
 
-  // Bankera Exchange pairs
+  // Bankera pairs
   public static final CurrencyPair BNK_BTC = new CurrencyPair(Currency.BNK, Currency.BTC);
   public static final CurrencyPair BNK_ETH = new CurrencyPair(Currency.BNK, Currency.ETH);
   public static final CurrencyPair BNK_USDT = new CurrencyPair(Currency.BNK, Currency.USDT);
@@ -396,9 +396,9 @@ public class CurrencyPair extends Instrument implements Comparable<CurrencyPair>
   public static final CurrencyPair WETH_PUSD = new CurrencyPair(Currency.WETH, Currency.PUSD);
   public static final CurrencyPair PLINK_USDC = new CurrencyPair(Currency.PLINK, Currency.USDC);
 
-  public final Currency base;
+  private final Currency base;
 
-  public final Currency counter;
+  private final Currency counter;
 
   /**
    * Full constructor In general the CurrencyPair.base is what you're wanting to buy/sell. The

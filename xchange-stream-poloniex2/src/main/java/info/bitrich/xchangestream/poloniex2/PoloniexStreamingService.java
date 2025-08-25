@@ -6,7 +6,7 @@ import info.bitrich.xchangestream.poloniex2.dto.PoloniexWebSocketEventsTransacti
 import info.bitrich.xchangestream.poloniex2.dto.PoloniexWebSocketOrderbookModifiedEvent;
 import info.bitrich.xchangestream.poloniex2.dto.PoloniexWebSocketSubscriptionMessage;
 import info.bitrich.xchangestream.service.netty.JsonNettyStreamingService;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +84,8 @@ public class PoloniexStreamingService extends JsonNettyStreamingService {
 
   public Observable<List<PoloniexWebSocketEvent>> subscribeCurrencyPairChannel(
       CurrencyPair currencyPair) {
-    String channelName = currencyPair.counter.toString() + "_" + currencyPair.base.toString();
+    String channelName =
+        currencyPair.getCounter().toString() + "_" + currencyPair.getBase().toString();
     return subscribeChannel(channelName)
         .map(
             jsonNode ->

@@ -54,7 +54,7 @@ public interface BitstampV2 {
 
   @GET
   @Path("trading-pairs-info/")
-  BitstampPairInfo[] getTradingPairsInfo() throws IOException, BitstampException;
+  List<BitstampPairInfo> getTradingPairsInfo() throws IOException, BitstampException;
 
   class Pair {
     public final CurrencyPair pair;
@@ -84,8 +84,8 @@ public interface BitstampV2 {
           ? ""
           : String.format(
               "%s%s",
-              pair.base.getCurrencyCode().toLowerCase(),
-              pair.counter.getCurrencyCode().toLowerCase());
+              pair.getBase().getCurrencyCode().toLowerCase(),
+              pair.getCounter().getCurrencyCode().toLowerCase());
     }
   }
 }

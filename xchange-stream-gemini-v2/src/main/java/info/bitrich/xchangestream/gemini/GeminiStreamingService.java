@@ -8,7 +8,7 @@ import info.bitrich.xchangestream.gemini.dto.GeminiWebSocketTransaction;
 import info.bitrich.xchangestream.service.netty.JsonNettyStreamingService;
 import info.bitrich.xchangestream.service.netty.StreamingObjectMapperHelper;
 import io.netty.util.internal.StringUtil;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -36,7 +36,7 @@ public class GeminiStreamingService extends JsonNettyStreamingService {
 
   public Observable<GeminiWebSocketTransaction> getRawWebSocketTransactions(
       CurrencyPair currencyPair, boolean filterChannelName) {
-    String channelName = currencyPair.base.toString() + currencyPair.counter.toString();
+    String channelName = currencyPair.getBase().toString() + currencyPair.getCounter().toString();
     final ObjectMapper mapper = StreamingObjectMapperHelper.getObjectMapper();
     return subscribeChannel(channelName)
         .map(s -> mapper.treeToValue(s, GeminiWebSocketTransaction.class))

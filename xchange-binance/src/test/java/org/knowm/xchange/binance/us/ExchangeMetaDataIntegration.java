@@ -21,18 +21,22 @@ public class ExchangeMetaDataIntegration extends BinanceUsExchangeIntegration {
   @Test
   public void testEthBtcPairMetaData() {
     InstrumentMetaData pairMetaData = metaData.getInstruments().get(CurrencyPair.ETH_BTC);
-    assertThat(pairMetaData.getPriceScale()).isEqualByComparingTo(6);
-    assertThat(pairMetaData.getMinimumAmount()).isEqualByComparingTo("0.001");
+    assertThat(pairMetaData.getPriceScale()).isEqualByComparingTo(5);
+    assertThat(pairMetaData.getPriceStepSize()).isEqualByComparingTo("0.00001");
+    assertThat(pairMetaData.getMinimumAmount()).isEqualByComparingTo("0.0001");
     assertThat(pairMetaData.getMaximumAmount().longValueExact()).isEqualTo(100000);
-    assertThat(pairMetaData.getAmountStepSize()).isEqualByComparingTo("0.001");
+    assertThat(pairMetaData.getCounterMinimumAmount()).isEqualByComparingTo("0.0001");
+    assertThat(pairMetaData.getAmountStepSize()).isEqualByComparingTo("0.0001");
   }
 
   @Test
   public void testLtcBtcPairMetaData() {
     InstrumentMetaData pairMetaData = metaData.getInstruments().get(new CurrencyPair("LTC/BTC"));
     assertThat(pairMetaData.getPriceScale()).isEqualByComparingTo(6);
-    assertThat(pairMetaData.getMinimumAmount()).isEqualByComparingTo("0.01");
+    assertThat(pairMetaData.getPriceStepSize()).isEqualByComparingTo("0.000001");
+    assertThat(pairMetaData.getMinimumAmount()).isEqualByComparingTo("0.001");
     assertThat(pairMetaData.getMaximumAmount().longValueExact()).isEqualTo(100000);
-    assertThat(pairMetaData.getAmountStepSize()).isEqualByComparingTo("0.01");
+    assertThat(pairMetaData.getCounterMinimumAmount()).isEqualByComparingTo("0.0001");
+    assertThat(pairMetaData.getAmountStepSize()).isEqualByComparingTo("0.001");
   }
 }

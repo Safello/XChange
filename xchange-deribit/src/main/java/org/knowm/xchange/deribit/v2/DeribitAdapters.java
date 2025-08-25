@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import org.knowm.xchange.currency.Currency;
@@ -53,7 +54,7 @@ public class DeribitAdapters {
   private static final String PERPETUAL = "PERPETUAL";
   private static final int CURRENCY_SCALE = 8;
   private static final ThreadLocal<DateFormat> DATE_PARSER =
-      ThreadLocal.withInitial(() -> new SimpleDateFormat("ddMMMyy"));
+      ThreadLocal.withInitial(() -> new SimpleDateFormat("ddMMMyy", Locale.US));
 
   public static String adaptInstrumentName(Instrument instrument) {
     if (instrument instanceof FuturesContract) {
@@ -65,8 +66,8 @@ public class DeribitAdapters {
   }
 
   public static String adaptInstrumentName(FuturesContract future) {
-    return future.getCurrencyPair().base
-        + (future.getCurrencyPair().counter == Currency.USDC ? "_USDC" : "")
+    return future.getCurrencyPair().getBase()
+        + (future.getCurrencyPair().getCounter() == Currency.USDC ? "_USDC" : "")
         + "-"
         + (future.getPrompt() == null ? PERPETUAL : (future.getPrompt()));
   }
@@ -76,7 +77,7 @@ public class DeribitAdapters {
     if (parts.length != 5) {
       throw new IllegalArgumentException("Could not adapt instrument name from '" + option + "'");
     }
-    return option.getCurrencyPair().base
+    return option.getCurrencyPair().getBase()
         + "-"
         + formatDate(option.getExpireDate())
         + "-"

@@ -4,7 +4,7 @@ import info.bitrich.xchangestream.bitfinex.dto.BitfinexWebSocketAuthOrder;
 import info.bitrich.xchangestream.bitfinex.dto.BitfinexWebSocketAuthPreTrade;
 import info.bitrich.xchangestream.bitfinex.dto.BitfinexWebSocketAuthTrade;
 import info.bitrich.xchangestream.core.StreamingTradeService;
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import java.util.function.Function;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
@@ -25,8 +25,10 @@ public class BitfinexStreamingTradeService implements StreamingTradeService {
         .map(BitfinexStreamingAdapters::adaptOrder)
         .doOnNext(
             o -> {
-              service.scheduleCalculatedBalanceFetch(o.getCurrencyPair().base.getCurrencyCode());
-              service.scheduleCalculatedBalanceFetch(o.getCurrencyPair().counter.getCurrencyCode());
+              service.scheduleCalculatedBalanceFetch(
+                  o.getCurrencyPair().getBase().getCurrencyCode());
+              service.scheduleCalculatedBalanceFetch(
+                  o.getCurrencyPair().getCounter().getCurrencyCode());
             });
   }
 
@@ -46,8 +48,10 @@ public class BitfinexStreamingTradeService implements StreamingTradeService {
         .map(BitfinexStreamingAdapters::adaptUserTrade)
         .doOnNext(
             t -> {
-              service.scheduleCalculatedBalanceFetch(t.getCurrencyPair().base.getCurrencyCode());
-              service.scheduleCalculatedBalanceFetch(t.getCurrencyPair().counter.getCurrencyCode());
+              service.scheduleCalculatedBalanceFetch(
+                  t.getCurrencyPair().getBase().getCurrencyCode());
+              service.scheduleCalculatedBalanceFetch(
+                  t.getCurrencyPair().getCounter().getCurrencyCode());
             });
   }
 
